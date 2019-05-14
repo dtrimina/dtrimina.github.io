@@ -5,20 +5,21 @@
   
 
   
-  <title>Hexo</title>
+  <title>AlexNet | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="AlexNetpaper: ImageNet Classification with Deep Convolutional Neural Networks We need large dataset to solve complex recognition tasks, and we need a model with a large learning capacity. Beside, mode">
+<meta name="keywords" content="CNNs_for_image_classification">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="AlexNet">
 <meta property="og:url" content="http://yoursite.com/2019/05/14/AlexNet/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="AlexNetpaper: ImageNet Classification with Deep Convolutional Neural Networks We need large dataset to solve complex recognition tasks, and we need a model with a large learning capacity. Beside, mode">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/AlexNet/AlexNet.jpg">
 <meta property="og:image" content="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/AlexNet/optimizer.jpg">
-<meta property="og:updated_time" content="2019-05-14T01:11:45.746Z">
+<meta property="og:updated_time" content="2019-05-14T06:04:04.469Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="AlexNet">
 <meta name="twitter:description" content="AlexNetpaper: ImageNet Classification with Deep Convolutional Neural Networks We need large dataset to solve complex recognition tasks, and we need a model with a large learning capacity. Beside, mode">
 <meta name="twitter:image" content="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/AlexNet/AlexNet.jpg">
   
@@ -70,12 +71,22 @@
         <section id="main"><article id="post-AlexNet" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/05/14/AlexNet/" class="article-date">
-  <time datetime="2019-05-14T05:55:39.044Z" itemprop="datePublished">2019-05-14</time>
+  <time datetime="2019-05-14T06:00:22.000Z" itemprop="datePublished">2019-05-14</time>
 </a>
     
   </div>
   <div class="article-inner">
     
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AlexNet
+    </h1>
+  
+
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
@@ -91,7 +102,7 @@
 <li>image’s shorter side rescale to 256, then crop out the central 256x256 patch</li>
 <li>subtract the mean activity over the training set from each pixel</li>
 </ol>
-<h3 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a><strong>Architecture</strong></h3><p><div align="center"><br><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/AlexNet/AlexNet.jpg" height="100%" width="100%"><br></div><br>5 convolutional and 3 fc. LRN is used after the first and second convolutional layers.  </p>
+<h3 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a><strong>Architecture</strong></h3><p><div align="center"><br><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/AlexNet/AlexNet.jpg" height="80%" width="80%"><br></div><br>5 convolutional and 3 fc. LRN is used after the first and second convolutional layers.  </p>
 <h3 id="Features-with-the-most-important-first"><a href="#Features-with-the-most-important-first" class="headerlink" title="Features with the most important first"></a><strong>Features with the most important first</strong></h3><ol>
 <li><strong>ReLU</strong>: make learning faster</li>
 <li>Multi GPUs training<ul>
@@ -118,7 +129,7 @@
 <li>Dropout</li>
 </ol>
 <h3 id="Training-Details"><a href="#Training-Details" class="headerlink" title="Training Details"></a><strong>Training Details</strong></h3><ol>
-<li>optimizer: SGD with momentum=0.9 and weight decay=0.0005<div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/AlexNet/optimizer.jpg" height="70%" width="70%"></div></li>
+<li>optimizer: SGD with momentum=0.9 and weight decay=0.0005<div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/AlexNet/optimizer.jpg" height="40%" width="40%"></div></li>
 <li>initialize: a zero-mean Gaussian distribution with std=0.01, neuron biases in the second, fourth, fifth convolutional layers and fc layers with the constant 1</li>
 <li>learning rate: use an equal learning rate for all layers, and divide the learning rate by 10 when validation error rate stops improving with the current lr</li>
 </ol>
@@ -127,9 +138,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/14/AlexNet/" data-id="cjvndve1800007styuw3ctu9q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/05/14/AlexNet/" data-id="cjvne5quf00006wtyfx3l878e" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CNNs-for-image-classification/">CNNs_for_image_classification</a></li></ul>
+
     </footer>
   </div>
   
@@ -145,9 +158,23 @@
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNNs-for-image-classification/">CNNs_for_image_classification</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CNNs-for-image-classification/" style="font-size: 10px;">CNNs_for_image_classification</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
@@ -166,7 +193,7 @@
       <ul>
         
           <li>
-            <a href="/2019/05/14/AlexNet/">(no title)</a>
+            <a href="/2019/05/14/AlexNet/">AlexNet</a>
           </li>
         
       </ul>
