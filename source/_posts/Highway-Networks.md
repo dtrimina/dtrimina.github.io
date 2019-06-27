@@ -1,10 +1,12 @@
 ---
 title: Highway Networks
-tags: 
-- CNNs_for_classification  
-categories: 
-- CNNs_for_classification
+tags:
+  - CNNs_for_classification
+categories:
+  - CNNs_for_classification
+date: 2019-05-31 14:43:35
 ---
+
 
 paper: [Highway Networks](https://arxiv.org/pdf/1505.00387.pdf)  
 

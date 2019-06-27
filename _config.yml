@@ -90,3 +90,5 @@ deploy:
   type: git
   repo: https://github.com/dtrimina/dtrimina.github.io.git
   branch: master
+
+mathjax: true
