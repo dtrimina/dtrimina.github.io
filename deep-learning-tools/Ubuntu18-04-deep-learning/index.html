@@ -8,7 +8,7 @@
 <li>use <code>which pip</code> or <code>which python</code>, you will see default pip or python is now in Anaconda.</li>
 <li>use <code>conda -V</code> to version of Anaconda</li>
 <li>add conda mirror follow <a href="https://mirror.tuna.tsinghua.edu.cn/help/anaconda/" target="_blank" rel="noopener">Anaconda 镜像使用帮助</a></li>
-<li>update pip source, <code>mkdir ~/.pip</code> and <code>sudo gedit ~/.pip/pip.conf</code>, then add the following in pip.conf  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br><span class="line">index-url=https://mirrors.aliyun.com/pypi/simple/</span><br></pre></td></tr></table></figure>
+<li>update pip source, <code>mkdir ~/.pip &amp;&amp; sudo gedit ~/.pip/pip.conf</code>, then add the following in pip.conf  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br><span class="line">index-url=https://mirrors.aliyun.com/pypi/simple/</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h5 id="NVIDIA-driver"><a href="#NVIDIA-driver" class="headerlink" title="NVIDIA driver"></a>NVIDIA driver</h5><ul>
@@ -93,8 +93,9 @@
 <li><p>turn on/off</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sslocal -c /etc/shadowsocks/shadowsocks.json -d  start</span><br><span class="line">sslocal -c /etc/shadowsocks/shadowsocks.json -d  stop</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>easy trun on/off (for <a href="https://blog.csdn.net/qq_24406903/article/details/85011090" target="_blank" rel="noopener">reference</a>), create file <code>ssll</code> and add</p>
+<li><p>easy trun on/off (for <a href="https://blog.csdn.net/qq_24406903/article/details/85011090" target="_blank" rel="noopener">reference</a>), create file <code>sudo gedit ssll</code> and add</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">if [ &quot;$1&quot; == &quot;on&quot; ]</span><br><span class="line">then</span><br><span class="line">    sslocal -c /etc/shadowsocks/shadowsocks.json -d  start</span><br><span class="line">elif [ &quot;$1&quot; == &quot;off&quot; ]</span><br><span class="line">then</span><br><span class="line">    sslocal -c /etc/shadowsocks/shadowsocks.json -d stop</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>  save and execute the commands</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">chmod +x ssll</span><br><span class="line">sudo mv ssll /bin/</span><br><span class="line"></span><br><span class="line"># use</span><br><span class="line">sudo ssll on    # turn on</span><br><span class="line">sudo ssll off    # turn off</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
