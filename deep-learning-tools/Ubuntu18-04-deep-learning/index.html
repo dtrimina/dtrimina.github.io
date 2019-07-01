@@ -8,7 +8,7 @@
 <li>use <code>which pip</code> or <code>which python</code>, you will see default pip or python is now in Anaconda.</li>
 <li>use <code>conda -V</code> to version of Anaconda</li>
 <li>add conda mirror follow <a href="https://mirror.tuna.tsinghua.edu.cn/help/anaconda/" target="_blank" rel="noopener">Anaconda 镜像使用帮助</a></li>
-<li>update pip source, <code>mkdir ~/.pip &amp;&amp; sudo gedit ~/.pip/pip.conf</code>, then add the following in pip.conf  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br><span class="line">index-url=https://mirrors.aliyun.com/pypi/simple/</span><br></pre></td></tr></table></figure>
+<li>update pip source, <code>mkdir ~/.pip</code> &amp;&amp; <code>sudo gedit ~/.pip/pip.conf</code>, then add the following in pip.conf  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br><span class="line">index-url=https://mirrors.aliyun.com/pypi/simple/</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h5 id="NVIDIA-driver"><a href="#NVIDIA-driver" class="headerlink" title="NVIDIA driver"></a>NVIDIA driver</h5><ul>
@@ -87,7 +87,7 @@
 <li><p>install version 3.0.0</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install -U git+https://github.com/shadowsocks/shadowsocks.git@master</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>edit .json config file <code>sudo mkdir /etc/shadowsocks &amp;&amp; sudo gedit /etc/shadowsocks/shadowsocks.json</code> and add follows</p>
+<li><p>edit .json config file <code>sudo mkdir /etc/shadowsocks</code> &amp;&amp; <code>sudo gedit /etc/shadowsocks/shadowsocks.json</code> and add follows</p>
   <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">"server"</span>:<span class="string">"server_ip"</span>,</span><br><span class="line"><span class="attr">"server_port"</span>:server_port,</span><br><span class="line"><span class="attr">"local_address"</span>:<span class="string">"127.0.0.1"</span>,</span><br><span class="line"><span class="attr">"local_port"</span>:<span class="number">1080</span>,</span><br><span class="line"><span class="attr">"password"</span>:<span class="string">"mypassword"</span>,</span><br><span class="line"><span class="attr">"timeout"</span>:<span class="number">300</span>,</span><br><span class="line"><span class="attr">"method"</span>:<span class="string">"aes-256-cfb"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>turn on/off</p>
