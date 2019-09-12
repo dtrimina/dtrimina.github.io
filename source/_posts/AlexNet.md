@@ -1,9 +1,9 @@
 ---
 title: AlexNet
 date: 2019-05-14 14:00:22
-tags: CNNs_for_classification
+tags: Classification
 categories: 
-- CNNs_for_classification
+- Classification
 ---
 
 paper: [ImageNet Classification with Deep Convolutional Neural Networks](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)

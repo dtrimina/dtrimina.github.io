@@ -1,9 +1,9 @@
 ---
 title: Highway Networks
 tags:
-  - CNNs_for_classification
+  - Classification
 categories:
-  - CNNs_for_classification
+  - Classification
 date: 2019-05-31 14:43:35
 ---
 

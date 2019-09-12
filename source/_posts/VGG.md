@@ -1,10 +1,10 @@
 ---
 title: VGG
 tags:
-  - CNNs_for_classification
-  - CNNs_for_localization
+  - Classification
+  - Localization
 categories:
-  - CNNs_for_classification
+  - Classification
 date: 2019-05-25 16:34:36
 ---
 

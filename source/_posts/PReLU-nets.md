@@ -1,9 +1,9 @@
 ---
 title: PReLU-nets
 tags:
-  - CNNs_for_classification
+  - Classification
 categories:
-  - CNNs_for_classification
+  - Classification
 date: 2019-06-01 15:48:18
 ---
 

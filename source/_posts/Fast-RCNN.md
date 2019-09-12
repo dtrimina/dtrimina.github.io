@@ -1,9 +1,9 @@
 ---
 title: Fast R-CNN
 tags:
-  - CNNs_for_detection
+  - Detection
 categories:
-  - CNNs_for_detection
+  - Detection
 mathjax: true
 date: 2019-06-21 19:17:50
 ---

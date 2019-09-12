@@ -1,9 +1,9 @@
 ---
 title: Batch-Normalization
 tags:
-  - CNNs_for_classification
+  - Classification
 categories:
-  - CNNs_for_classification
+  - Classification
 date: 2019-05-30 14:05:53
 ---
 

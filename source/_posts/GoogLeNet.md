@@ -1,10 +1,10 @@
 ---
 title: GoogLeNet
 tags:
-  - CNNs_for_classification
-  - CNNs_for_detection
+  - Classification
+  - Detection
 categories:
-  - CNNs_for_classification
+  - Classification
 date: 2019-05-25 19:47:40
 ---
 

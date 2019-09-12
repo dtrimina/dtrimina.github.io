@@ -1,10 +1,10 @@
 ---
 title: SPP-net
 tags:
-  - CNNs_for_classification
-  - CNNs_for_detection
+  - Classification
+  - Detection
 categories:
-  - CNNs_for_classification
+  - Classification
 mathjax: true
 date: 2019-06-19 15:28:40
 ---

@@ -32,13 +32,15 @@ paper: [Object Detection in 20 Years: A Survey](https://arxiv.org/pdf/1905.05055
 paper: [GCNet: Non-local Networks Meet Squeeze-Excitation Networks and Beyond](https://arxiv.org/pdf/1904.11492.pdf)
 paper: [Mask R-CNN](https://arxiv.org/pdf/1703.06870v3)
 
-paper: [Fully Convolutional Networks for Semantic Segmentation](https://people.eecs.berkeley.edu/~jonlong/long_shelhamer_fcn.pdf)
+
 paper: [Instance-aware Semantic Segmentation via Multi-task Network Cascades](http://xxx.itp.ac.cn/pdf/1512.04412)
 paper: [Learning to Segment Object Candidates](http://xxx.itp.ac.cn/pdf/1506.06204v2)
 paper: [Object Detection Networks on Convolutional Feature Maps](http://xxx.itp.ac.cn/pdf/1504.06066v2)
 paper: [Convolutional Feature Masking for Joint Object and Stuff Segmentation](http://xxx.itp.ac.cn/pdf/1412.1283v4)
 paper: [DenseCap: Fully Convolutional Localization Networks for Dense Captioning](http://www.micc.unifi.it/bagdanov/pdfs/densecap.pdf)
 paper: [Deep Sliding Shapes for Amodal 3D Object Detection in RGB-D Images](http://dss.cs.princeton.edu/paper.pdf)
+paper: [ENet: A Deep Neural Network Architecture for Real-Time Semantic Segmentation](http://xxx.itp.ac.cn/pdf/1606.02147v1)
+
 paper: []()
 paper: []()
 paper: []()
@@ -72,5 +74,6 @@ paper: []()
 paper: []()
 paper: []()
 paper: []()
-paper: []()
-paper: []()
+
+
+AN ANALYSIS OF DEEP NEURAL NETWORK MODELS FOR PRACTICAL APPLICATIONS

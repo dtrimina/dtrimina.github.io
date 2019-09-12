@@ -1,9 +1,9 @@
 ---
 title: Resnet
 tags:
-  - CNNs_for_classification
+  - Classification
 categories:
-  - CNNs_for_classification
+  - Classification
 mathjax: true
 date: 2019-06-27 19:35:04
 ---

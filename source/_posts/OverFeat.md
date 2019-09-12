@@ -1,11 +1,11 @@
 ---
 title: OverFeat
 tags: 
-- CNNs_for_classification  
-- CNNs_for_localization  
-- CNNs_for_detection
+- Classification  
+- Localization  
+- Detection
 categories:
-  - CNNs_for_classification
+  - Classification
 date: 2019-05-21 14:28:59
 ---
 

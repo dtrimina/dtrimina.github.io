@@ -1,8 +1,8 @@
 ---
 title: SKNet
-tags: CNNs_for_classification
+tags: Classification
 categories:
-  - CNNs_for_classification
+  - Classification
 date: 2019-05-30 09:19:43
 ---
 

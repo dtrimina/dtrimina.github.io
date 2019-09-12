@@ -1,15 +1,15 @@
 ---
 title: Faster R-CNN
 tags: 
-- CNNs_for_classification  
-- CNNs_for_localization  
 - CNNs_for_detection
 categories: 
-- CNNs_for_classification
+- CNNs_for_detection
 mathjax: true
 ---
 
-paper: []()
+paper: [Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks](http://xxx.itp.ac.cn/pdf/1506.01497v3)
+
+
 
 $ x_i $
 

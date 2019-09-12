@@ -1,9 +1,9 @@
 ---
 title: NIN
 tags:
-  - CNNs_for_classification
+  - Classification
 categories:
-  - CNNs_for_classification
+  - Classification
 date: 2019-05-25 09:23:49
 ---
 

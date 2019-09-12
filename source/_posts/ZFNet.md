@@ -1,8 +1,8 @@
 ---
 title: ZFNet
-tags: CNNs_for_classification
+tags: Classification
 categories:
-  - CNNs_for_classification
+  - Classification
 date: 2019-05-16 10:40:23
 ---
 
