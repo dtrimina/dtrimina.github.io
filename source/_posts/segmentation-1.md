@@ -54,7 +54,7 @@ paper: [Learning Deconvolution Network for Semantic Segmentation](http://xxx.itp
 <div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/Deconvnet/deconvnet-arcitecture.jpg" height="90%" width="90%"></div>
 
 编码部分：
-- 使用VGG16结构
+- 使用VGG16结构，包括全连接层，这样训练就包括了全连接层的很多参数。
 - 需要记录MaxPooling中的位置信息，供解码部分使用
 
 <div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/Deconvnet/unpooling-deconv.jpg" height="70%" width="70%"></div>
