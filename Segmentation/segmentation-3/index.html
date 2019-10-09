@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="learning CNNs and deep learning"><title>segmentation(3) -- ENet、LinkNet、FC-DenseNet | LXY</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/8.0.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/3.4.0/jquery.min.js"></script><link rel="icon" mask sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">segmentation(3) -- ENet、LinkNet、FC-DenseNet</h1><a id="logo" href="/.">LXY</a><p class="description">deep learning tutorial</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">segmentation(3) -- ENet、LinkNet、FC-DenseNet</h1><div class="post-meta">Oct 9, 2019<span> | </span><span class="category"><a href="/categories/Segmentation/">Segmentation</a></span></div><div class="post-content"><p>paper: <a href="http://xxx.itp.ac.cn/pdf/1606.02147v1" target="_blank" rel="noopener">ENet: A Deep Neural Network Architecture for Real-Time Semantic Segmentation</a></p>
+<h5 id="总体结构"><a href="#总体结构" class="headerlink" title="总体结构"></a>总体结构</h5><center><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/ENet/ENet_architecture.jpg" height="50%" width="50%"></center>  
+
+<p>主要模块如下  </p>
+<center><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/ENet/ENet_block.jpg" height="70%" width="70%"></center>   
+
+
+<p>(a)为初始的init<br>(b)为整体结构主要模块，借鉴resnet中bottleneck，其中  </p>
+<ul>
+<li>regularizer use Spatial Dropout, with p = 0.01 before bottleneck2.0, and p = 0.1 afterwards. </li>
+<li>bottleneck downsampling: using maxpooling and replace the first 1x1 projection with a 2x2 conv stride=2</li>
+<li>bottleneck dilated: conv使用空洞卷积</li>
+<li>bottleneck asymmetric: conv使用分离卷积 eg. 5x1conv + 1x5conv</li>
+<li>bottleneck unsampling(decoder): replace maxpooling with max unpooling  </li>
+</ul>
+<p>特点： </p>
+<ul>
+<li>use dilated convolutions to have a wide receptive field</li>
+<li>early downsampling</li>
+<li>a large encoder and a small decoder</li>
+<li>use PReLUs, not ReLUs</li>
+<li>factorizing filters by using 5x1 conv and 1x5 conv</li>
+<li>regularization update from L2 -&gt; stochastic depth -&gt; Spatial Dropout</li>
+</ul>
+<hr>
+<p>paper: <a href="http://xxx.itp.ac.cn/pdf/1707.03718.pdf" target="_blank" rel="noopener">LinkNet: Exploiting Encoder Representations for Efficient Semantic Segmentation</a>  [ <a href="https://codeac29.github.io/projects/linknet" target="_blank" rel="noopener">website</a> | <a href="https://github.com/e-lab/pytorch-linknet/blob/master/models/linknet.py" target="_blank" rel="noopener">pytorch_code</a> ]</p>
+<h5 id="总体结构-1"><a href="#总体结构-1" class="headerlink" title="总体结构"></a>总体结构</h5><center><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/LinkNet/LinkNet_architecture.jpg" height="50%" width="50%"></center>
+
+<p>其中encoder block 及 decoder block 分别如下  </p>
+<center> <figure class="half"><br>    <img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/LinkNet/LinkNet_encoder_block.jpg" height="30%" width="30%"><br>    <img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/LinkNet/LinkNet_decoder_block.jpg" height="30%" width="30%"><br></figure> </center>
+
+<ul>
+<li>use ResNet18 as its encoder  </li>
+<li>link each encoder with decoder which is aimed to recover lost spatial information</li>
+<li>can give real-time performance even on NVIDIA TX1 embedded system module  </li>
+<li>use weighing scheme $w_{\text {class }}=\frac{1}{\ln \left(1.02+p_{\text {class }}\right)}$, which is better than mean average frequency  </li>
+<li>use database cityscape and camvid</li>
+</ul>
+<h5 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h5><ul>
+<li>cityscape <center><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/LinkNet/cityscape_result.jpg" height="50%" width="50%"></center></li>
+<li>camvid<center><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/LinkNet/camvid_result.jpg" height="90%" width="90%"></center>
+
+</li>
+</ul>
+<hr>
+<p>paper: <a href="http://xxx.itp.ac.cn/pdf/1611.09326.pdf" target="_blank" rel="noopener">The One Hundred Layers Tiramisu: Fully Convolutional DenseNets for Semantic Segmentation</a></p>
+<h5 id="总体结构-2"><a href="#总体结构-2" class="headerlink" title="总体结构"></a>总体结构</h5><center> <figure class="half"><br>    <img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/FCDensNets/FCDensnets_architecture.jpg" height="40%" width="40%"><br>    <img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/FCDensNets/configs.jpg" height="50%" width="50%"><br></figure> </center>
+
+<p>其中DB(Dense Block)、DB中的layer、TD(尺寸缩减)、TU(尺寸变大)部分如下</p>
+<center><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/FCDensNets/dense_block.jpg" height="20%" width="20%"></center><br><center><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/FCDensNets/layer_down_up.jpg" height="70%" width="70%"></center>  
+
+<ul>
+<li>use DenseNet architecture  </li>
+<li>use database camvid and gatech</li>
+</ul>
+<h5 id="实验结果-1"><a href="#实验结果-1" class="headerlink" title="实验结果"></a>实验结果</h5><ul>
+<li>camvid<center><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/FCDensNets/camvid_result.jpg" height="100%" width="100%"></center>
+</li>
+</ul>
+</div><div class="tags"><a href="/tags/Segmentation/">Segmentation</a></div><div class="post-nav"><a class="next" href="/Segmentation/segmentation-2/">segmentation(2) -- U-Net、SegNet</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="https://blog.dtrimina.cn"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Classification/" style="font-size: 15px;">Classification</a> <a href="/tags/Localization/" style="font-size: 15px;">Localization</a> <a href="/tags/Detection/" style="font-size: 15px;">Detection</a> <a href="/tags/deep-learning-tools/" style="font-size: 15px;">deep-learning-tools</a> <a href="/tags/summary/" style="font-size: 15px;">summary</a> <a href="/tags/Segmentation/" style="font-size: 15px;">Segmentation</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/Segmentation/segmentation-3/">segmentation(3) -- ENet、LinkNet、FC-DenseNet</a></li><li class="post-list-item"><a class="post-list-link" href="/Segmentation/segmentation-2/">segmentation(2) -- U-Net、SegNet</a></li><li class="post-list-item"><a class="post-list-link" href="/Classification/Inceptions/">Inceptions - GoogLeNet, V3, V4</a></li><li class="post-list-item"><a class="post-list-link" href="/Segmentation/segmentation-1/">segmentation(1) -- FCN、DeconvNet</a></li><li class="post-list-item"><a class="post-list-link" href="/summary/CNN-architecture-summary/">Systematic evaluation of CNN advances on the ImageNet</a></li><li class="post-list-item"><a class="post-list-link" href="/Classification/SqueezeNet/">SqueezeNet</a></li><li class="post-list-item"><a class="post-list-link" href="/deep-learning-tools/Ubuntu18-04-deep-learning/">Ubuntu18.04 with deep learning (cuda10.0 + pytorch1.1 + tensorflow2.0.0-beta + mxnet)</a></li><li class="post-list-item"><a class="post-list-link" href="/Classification/Resnet/">Resnet</a></li><li class="post-list-item"><a class="post-list-link" href="/Detection/Fast-RCNN/">Fast R-CNN</a></li><li class="post-list-item"><a class="post-list-link" href="/Classification/SPP-net/">SPP-net</a></li></ul></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">LXY.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css"><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+  });
+</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
