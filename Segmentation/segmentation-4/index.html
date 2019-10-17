@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="learning CNNs and deep learning"><title>segmentation(4) -- DilatedNet、DRN | LXY</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/8.0.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/3.4.0/jquery.min.js"></script><link rel="icon" mask sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">segmentation(4) -- DilatedNet、DRN</h1><a id="logo" href="/.">LXY</a><p class="description">deep learning tutorial</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">segmentation(4) -- DilatedNet、DRN</h1><div class="post-meta">Oct 17, 2019<span> | </span><span class="category"><a href="/categories/Segmentation/">Segmentation</a></span></div><div class="post-content"><p>paper: <a href="http://xxx.itp.ac.cn/pdf/1511.07122v3" target="_blank" rel="noopener">DilatedNet: MULTI-SCALE CONTEXT AGGREGATION BY DILATED CONVOLUTIONS</a> | [ <a href="https://github.com/bordesf/dilation/blob/master/dilated_cnn.py" target="_blank" rel="noopener">code</a>/<a href="https://github.com/Blade6570/Dilation-Pytorch-Semantic-Segmentation/blob/master/CAN_network.py" target="_blank" rel="noopener">pytorch_code</a> ]</p>
+<h5 id="总体结构"><a href="#总体结构" class="headerlink" title="总体结构"></a>总体结构</h5><p><strong>a VGG16 based front-end prediction module + a context module</strong>  </p>
+<ul>
+<li>对于front-end: We adapted the VGG-16 network for dense prediction and removed the last two pooling and striding layers. Specifically, each of these pooling and striding layers was removed and convolutions in all subsequent layers were dilated by a factor of 2 for each pooling layer that was ablated.  </li>
+<li><p>接下来得到channel为C(类别)的feature map. 通过context module, 得到C channel的输出, 如下所示  </p>
+<div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/DilatedNet/context_module.jpg" height="70%" width="70%"></div>  
+
+
+</li>
+</ul>
+<h5 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h5><ul>
+<li><p>使用dilated convolution. 作者认为Pooling or upsample增加感受野的方式会使得图片分辨率变小，空间信息丢失，而使用dilated convolution可以在不缩减尺寸的情况下增加感受野。  </p>
+<div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/DilatedNet/dilated_convolution.jpg" height="60%" width="60%"></div>  
+
+
+</li>
+</ul>
+<hr>
+<p>paper: <a href="http://xxx.itp.ac.cn/pdf/1705.09914v1" target="_blank" rel="noopener">DRN: Dilated Residual Networks</a>  </p>
+<h5 id="总体结构-1"><a href="#总体结构-1" class="headerlink" title="总体结构"></a>总体结构</h5><div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/DRN/DRNs.png" height="90%" width="90%"></div>  
+
+<p>DRN算是DilatedNet的升级版，使用resnet结构代替VGG。并在此表明自己的观点：  </p>
+<ul>
+<li>考虑到小物体在大背景的情况下，经过多次缩减,the background response may suppress the signal from the object of interest. What’s worse,if the object’s signal is lost due to downsampling, there is little hope to recover it during training.</li>
+<li>增加输出分辨率最直接的办法就是减少尺寸缩减的次数。但是尺寸缩减次数减少，后层感受野减小，有可能reduce the amount of context that can inform the prediction。</li>
+<li>考虑到以上两点，又要减少尺寸缩减的次数，又要感受野不变小，就在后面几层使用dilated convolution来提高感受野。  </li>
+</ul>
+<p>上面DRN-A-18结构就是在resnet18的基础上进行改进。Group4和Group5的residual blocks不使用尺寸缩减，而是使用factor为2和4的dilated convolution。  </p>
+<div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/DRN/resnet_vs_DRN.png" height="50%" width="50%"></div>  
+
+<p>对于DRN-B-26，because this maxpooling operation leads to high-amplitude high-frequency activations, 所以用了两个resblock来代替，并在最后加了两个resblock来减小输出网格效应，但也一定加深了网络的深度。为了进一步减小网格效应，DRN-C-26将最后加的两个resblock跳跃连接去掉了。  </p>
+<div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/DRN/why_remove_maxpooling.png" height="50%" width="50%"></div>  
+
+
+<h5 id="results"><a href="#results" class="headerlink" title="results"></a>results</h5><ul>
+<li><p>Imagenet classification  </p>
+<div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/DRN/imagenet_result.png" height="50%" width="50%"></div>   
+</li>
+<li><p>Cityscapes segmentation</p>
+<div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/DRN/cityscapes_result.png" height="90%" width="90%"></div>   
+
+</li>
+</ul>
+</div><div class="tags"><a href="/tags/Segmentation/">Segmentation</a></div><div class="post-nav"><a class="next" href="/Segmentation/segmentation-3/">segmentation(3) -- ENet、LinkNet、FC-DenseNet</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="https://blog.dtrimina.cn"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/deep-learning-tools/" style="font-size: 15px;">deep-learning-tools</a> <a href="/tags/Classification/" style="font-size: 15px;">Classification</a> <a href="/tags/Localization/" style="font-size: 15px;">Localization</a> <a href="/tags/Detection/" style="font-size: 15px;">Detection</a> <a href="/tags/Segmentation/" style="font-size: 15px;">Segmentation</a> <a href="/tags/summary/" style="font-size: 15px;">summary</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/Segmentation/segmentation-4/">segmentation(4) -- DilatedNet、DRN</a></li><li class="post-list-item"><a class="post-list-link" href="/Segmentation/segmentation-3/">segmentation(3) -- ENet、LinkNet、FC-DenseNet</a></li><li class="post-list-item"><a class="post-list-link" href="/Segmentation/segmentation-2/">segmentation(2) -- U-Net、SegNet</a></li><li class="post-list-item"><a class="post-list-link" href="/Classification/Inceptions/">Inceptions - GoogLeNet, V3, V4</a></li><li class="post-list-item"><a class="post-list-link" href="/Segmentation/segmentation-1/">segmentation(1) -- FCN、DeconvNet</a></li><li class="post-list-item"><a class="post-list-link" href="/summary/CNN-architecture-summary/">Systematic evaluation of CNN advances on the ImageNet</a></li><li class="post-list-item"><a class="post-list-link" href="/Classification/SqueezeNet/">SqueezeNet</a></li><li class="post-list-item"><a class="post-list-link" href="/deep-learning-tools/Ubuntu18-04-deep-learning/">Ubuntu18.04 with deep learning (cuda10.0 + pytorch1.1 + tensorflow2.0.0-beta + mxnet)</a></li><li class="post-list-item"><a class="post-list-link" href="/Classification/Resnet/">Resnet</a></li><li class="post-list-item"><a class="post-list-link" href="/Detection/Fast-RCNN/">Fast R-CNN</a></li></ul></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">LXY.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css"><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+  });
+</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
