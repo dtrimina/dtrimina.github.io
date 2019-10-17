@@ -53,6 +53,7 @@ paper: [Inception-v4, Inception-ResNet and the Impact of Residual Connections on
 - Reduction-B -> Figure 8
 - Inception-C -> Figure 6 
 
+
 ##### Inception-ResNets
 总体结构如下：
 <div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/Inception_v4/Inception_resnets.jpg" height="40%" width="40%"></div>   

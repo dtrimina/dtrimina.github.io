@@ -38,14 +38,14 @@ paper: [Object Detection Networks on Convolutional Feature Maps](http://xxx.itp.
 paper: [Convolutional Feature Masking for Joint Object and Stuff Segmentation](http://xxx.itp.ac.cn/pdf/1412.1283v4)
 paper: [DenseCap: Fully Convolutional Localization Networks for Dense Captioning](http://www.micc.unifi.it/bagdanov/pdfs/densecap.pdf)
 paper: [Deep Sliding Shapes for Amodal 3D Object Detection in RGB-D Images](http://dss.cs.princeton.edu/paper.pdf)
-paper: [ENet: A Deep Neural Network Architecture for Real-Time Semantic Segmentation](http://xxx.itp.ac.cn/pdf/1606.02147v1)
+
 
 paper: [deeplab v1](http://xxx.itp.ac.cn/pdf/1412.7062v3.pdf)
 paper: [deeplab v2](http://xxx.itp.ac.cn/pdf/1606.00915v2)
 paper: [deeplab v3](http://xxx.itp.ac.cn/pdf/1706.05587v3)
 paper: [deeplab v3+](http://xxx.itp.ac.cn/pdf/1802.02611v3)
-paper: []()
-paper: []()
+
+
 paper: []()
 paper: []()
 paper: []()
@@ -79,3 +79,4 @@ AN ANALYSIS OF DEEP NEURAL NETWORK MODELS FOR PRACTICAL APPLICATIONS
 
 
 DeepLab: Semantic Image Segmentation with Deep Convolutional Nets, Atrous Convolution, and Fully Connected CRFs
+Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation

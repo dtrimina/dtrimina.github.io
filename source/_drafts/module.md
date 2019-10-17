@@ -18,6 +18,13 @@ $ x_i $
 ### **Architecture**
 <div align="center"><img src="" height="70%" width="70%"></div>
 
+<center><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_detection/Fast_RCNN/Fast_RCNN.png" height="70%" width="70%"></center>
+
+<center> <figure class="half">
+    <img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_detection/Fast_RCNN/Fast_RCNN.png" height="70%" width="70%">
+    <img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_detection/Fast_RCNN/Fast_RCNN.png" height="50" width="50">
+</figure> </center>
+
 ### **Features with the most important first**
 ### **Reducing Overfitting**
 ### **Training Details**
