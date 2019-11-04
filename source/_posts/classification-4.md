@@ -1,5 +1,5 @@
 ---
-title: 'Inceptions - GoogLeNet, V3, V4'
+title: Inceptions -- GoogLeNet, V2, V3, V4
 tags:
   - Classification
 categories:

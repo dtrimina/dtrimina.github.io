@@ -33,17 +33,17 @@ paper: [DilatedNet: MULTI-SCALE CONTEXT AGGREGATION BY DILATED CONVOLUTIONS](htt
 -------------------------------
 
 
-paper: [DRN: Dilated Residual Networks](http://xxx.itp.ac.cn/pdf/1705.09914v1)  
+paper: [DRN: Dilated Residual Networks](http://xxx.itp.ac.cn/pdf/1705.09914v1) | [[pytorch_code](https://github.com/fyu/drn)] 
 
 
 ##### 总体结构  
 
 <div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/Segmentation/DRN/DRNs.png" height="90%" width="90%"></div>  
 
-DRN算是DilatedNet的升级版，使用resnet结构代替VGG。并在此表明自己的观点：  
+DRN算是DilatedNet的升级版，使用resnet结构代替VGG。并在此再次表明自己的观点：  
 - 考虑到小物体在大背景的情况下，经过多次缩减,the background response may suppress the signal from the object of interest. What’s worse,if the object’s signal is lost due to downsampling, there is little hope to recover it during training.
 - 增加输出分辨率最直接的办法就是减少尺寸缩减的次数。但是尺寸缩减次数减少，后层感受野减小，有可能reduce the amount of context that can inform the prediction。
-- 考虑到以上两点，又要减少尺寸缩减的次数，又要感受野不变小，就在后面几层使用dilated convolution来提高感受野。  
+- 考虑到以上两点，又要减少尺寸缩减的次数，提升输出分辨率，又要感受野不变小，就在后面几层使用dilated convolution来提高感受野。  
 
 上面DRN-A-18结构就是在resnet18的基础上进行改进。Group4和Group5的residual blocks不使用尺寸缩减，而是使用factor为2和4的dilated convolution。  
 
