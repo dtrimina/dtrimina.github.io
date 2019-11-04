@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="learning CNNs and deep learning"><title>classification(3) -- VGG、Resnet、GoogLeNet、SPP-net | LXY</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/8.0.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/3.4.0/jquery.min.js"></script><link rel="icon" mask sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">classification(3) -- VGG、Resnet、GoogLeNet、SPP-net</h1><a id="logo" href="/.">LXY</a><p class="description">deep learning tutorial</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">classification(3) -- VGG、Resnet、GoogLeNet、SPP-net</h1><div class="post-meta">Jun 19, 2019<span> | </span><span class="category"><a href="/categories/Classification/">Classification</a></span></div><div class="post-content"><p>paper: <a href="https://arxiv.org/pdf/1409.1556.pdf" target="_blank" rel="noopener">VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION</a>  </p>
+<p>the winner and runner-up of localization and classification task in ILSVRC-2014.  </p>
+<h3 id="Contributions"><a href="#Contributions" class="headerlink" title="Contributions"></a><strong>Contributions</strong></h3><ul>
+<li>increase depth of the network using an architecture with very small (3×3) convolution filters.  </li>
+</ul>
+<h3 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a><strong>Architecture</strong></h3><div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/VGG/VGG.jpg" height="70%" width="70%"></div>
+
+<ul>
+<li>use 1x1 conv in <a href>NIN</a> to add depth. </li>
+<li>five max-poolinglayers are performed over a 2×2 pixel window, with stride 2. </li>
+<li>padding is 1 pixel for 3x3 conv. </li>
+<li>no LRN. </li>
+<li>pretrained <strong>VGG16</strong> is the most frequently used. </li>
+<li>It is easy to see that a stack of two 3×3 conv layers has an effective receptive field of 5×5; three such layers have a 7×7 effective receptive field, but have fewer paramenters. </li>
+</ul>
+<h3 id="Training-Details"><a href="#Training-Details" class="headerlink" title="Training Details"></a><strong>Training Details</strong></h3><ul>
+<li>SGD optmizer, The batch size was set to 256, momentum to 0.9. The training was regularised by weight decay (the L2 penalty multiplier set to 5e−4 ) and dropout regularisation for the first two fully-connected layers. The learning rate was initially set to 1e−2 , and then decreased by a factor of 10 when the validation set accuracy stopped improving. </li>
+<li>randomly cropped from rescaled training images (one crop per image per SGD iteration). </li>
+<li>To further augment the training set, the crops underwent random horizontal flipping and random RGB colour shift. </li>
+<li><p>pre-initialisation of certain layers, but found it can initialized by <a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf" target="_blank" rel="noopener">Glorot &amp; Bengio</a>  </p>
+<div align="center"><br><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/VGG/VGG_Glorot_Bengio_initialisation.jpg" height="50%" width="50%"><br></div>  
+</li>
+<li><p>testing similar to <a href="https://blog.dtrimina.cn/CNNs-for-classification/OverFeat/">OverFeat</a> </p>
+</li>
+<li>a speedup of 3.75 times on an off-the-self 4-GPU systerm. </li>
+</ul>
+<h3 id="Conclusions-from-Experiments"><a href="#Conclusions-from-Experiments" class="headerlink" title="Conclusions from Experiments"></a><strong>Conclusions from Experiments</strong></h3><ol>
+<li>LRN is useless.  </li>
+<li>depth is important.  </li>
+<li>in the same depth, 3x3 conv is better than 1x1 conv.  </li>
+<li>The error rate of VGG saturates when the depth reaches 19 layers, it might need more data for training.  </li>
+<li>scale jittering at both training and testing time leads to better results than fixed smallest side.  </li>
+<li>dense convnet evaluation similar used in <a href="https://blog.dtrimina.cn/CNNs-for-classification/OverFeat/">OverFeat</a> is slightly worse than mult-crop evaluation used in <a href="https://blog.dtrimina.cn/CNNs-for-classification/GoogLeNet/">GoogLeNet</a>, but it’s high-efficiency.  </li>
+<li>use ensemble method.  </li>
+</ol>
+<h3 id="Localization"><a href="#Localization" class="headerlink" title="Localization"></a><strong>Localization</strong></h3><ul>
+<li>a single object bounding box should be predicted for each of the top-5 classes. </li>
+<li>A bounding box is represented by a 4-D vector storing its center coordinates, width, and height. Training detail can refer to OverFeat. </li>
+<li><strong>pretrained vggs is very good feature extractors</strong>. </li>
+</ul>
+<hr>
+<p>paper: <a href="http://xxx.itp.ac.cn/pdf/1512.03385" target="_blank" rel="noopener">Deep Residual Learning for Image Recognition</a>  </p>
+<h3 id="degradation-problem"><a href="#degradation-problem" class="headerlink" title="degradation problem"></a><strong>degradation problem</strong></h3><p>what is the problem ?<br>with the network depth increasing, accuracy gets saturated (which might be unsurprising) and then degrades rapidly, just as shown below. such degradation is <strong>not caused by overfitting</strong>.  </p>
+<div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/Resnet/degradation_problem.png" height="70%" width="70%"></div>  
+
+<h3 id="Architectures"><a href="#Architectures" class="headerlink" title="Architectures"></a><strong>Architectures</strong></h3><div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/Resnet/resblock.jpg" height="70%" width="70%"></div><br>Above are residual blocks, left is used for shallow networks, right is used for deeper networks.<br><div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/Resnet/resnet_picture.png" height="100%" width="100%"></div><br><div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/Resnet/resnets.jpg" height="70%" width="70%"></div> 
+
+<ul>
+<li>plain version is similar to <a href="https://blog.dtrimina.cn/CNNs-for-classification/VGG/">VGG</a>, but performs downsampling directly by convolutional layers that have a stride of 2 and ends with a global average pooling and softmax. </li>
+<li><a href="https://blog.dtrimina.cn/CNNs-for-classification/Batch-Normalization/">batch normalization</a> is used after conv. ReLU activation function is used. </li>
+<li>residual block can solve the degradation problem, and can make model deeper.</li>
+</ul>
+<hr>
+<p>paper: <a href="https://arxiv.org/pdf/1409.4842.pdf" target="_blank" rel="noopener">Going deeper with convolutions</a>  </p>
+<p>The most straightforward way of improving the performance of deep neural networks is by increasing both their depth and width. But it makes a larger number of parameters which makes the enlarged network more prone to overfitting and increases use of computational resources. The fundamental way of solving both issues would be by ultimately moving from fully connected to sparsely connected architectures. But todays computing infrastructures are very inefficient when it comes to numerical calculation on non-uniform sparse data structures. how about an architecture that makes use of the extra sparsity, even at filter level, as suggested by GoogLeNet. It’s the winner of ILSVRC-2014 classification task.  </p>
+<h3 id="Keys"><a href="#Keys" class="headerlink" title="Keys"></a><strong>Keys</strong></h3><ol>
+<li>Inception module with dimension reduction </li>
+<li>Auxiliary classifiers</li>
+</ol>
+<h3 id="Inception-module"><a href="#Inception-module" class="headerlink" title="Inception module"></a><strong>Inception module</strong></h3><div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/Inception_v1/inception_module.jpg" height="50%" width="50%"></div>  
+
+<p>purpose of 1x1 conv in <a href="https://blog.dtrimina.cn/CNNs-for-classification/NIN/">NIN</a>: </p>
+<ul>
+<li>increase the representational power of neural networks </li>
+<li>dimension reduction </li>
+</ul>
+<p>visual information should be processed at various scales (1x1, 3x3, 5x5 conv) and then aggregated so that the next stage can abstract features from different scales simultaneously.  </p>
+<h3 id="GoogLeNet"><a href="#GoogLeNet" class="headerlink" title="GoogLeNet"></a><strong>GoogLeNet</strong></h3><div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/Inception_v1/GoogLeNet_picture.png" height="70%" width="70%"></div>  
+
+<p>The network is 22 layers deep when counting only layers with parameters. The use of average pooling before the classifier which improves the performence is based on <a href="https://blog.dtrimina.cn/CNNs-for-classification/NIN/">NIN</a>.  Auxiliary classifiers put on top of the output of the Inception (4a) and (4d) modules. During training, their loss gets added to the total loss of the network with a discount weight to 0.3. At inference time, these auxiliary networks are discarded. The other details are in the paper. </p>
+<h3 id="Training-and-Testing"><a href="#Training-and-Testing" class="headerlink" title="Training and Testing"></a><strong>Training and Testing</strong></h3><p>no special training details but a set of techniques during testing to obtain a higher performance are as follows: </p>
+<ul>
+<li>ensemble prediction using 7 models. </li>
+<li>a more aggressive cropping approach than <a href="https://blog.dtrimina.cn/CNNs-for-classification/AlexNet/">AlexNet</a>. a) resize the image to 4 scales where the shorter dimension is 256, 288, 320 and 352 respectively; b) take the left, center and right square of these resized images (in the case of portrait images, we take the top, center and bottom squares); c) For each square, we then take the 4 corners and the center 224×224 crop as well as the square resized to 224×224, and their mirrored versions. This results in 4×3×6×2 = 144 crops per image. </li>
+<li>The softmax probabilities are averaged over multiple crops and over all the individual classifiers to obtain the final prediction.</li>
+</ul>
+<h3 id="Detection"><a href="#Detection" class="headerlink" title="Detection"></a><strong>Detection</strong></h3><ul>
+<li>Similar to R-CNN, but is augmented with the Inception model as the region classifier. </li>
+<li>combining the Selective Search approach with multi-box predictions for higher object bounding box recall. </li>
+<li>In order to cut down the number of false positives, the superpixel size was increased by 2×. </li>
+<li>do not use bounding box regression due to lack of time.</li>
+</ul>
+<hr>
+<p>paper: <a href="https://arxiv.org/pdf/1905.09646.pdf" target="_blank" rel="noopener">Spatial Group-wise Enhance: Improving Semantic Feature Learning in Convolutional Networks</a></p>
+<p>Because of fc layers, CNNs require a fixed input size. We can solve it by replacing fc layers with convolutional layers and then averaging which is used in <a href="https://blog.dtrimina.cn/CNNs-for-classification/OverFeat/">OverFeat</a>. Or using SPP layer in this paper.</p>
+<h3 id="How-SPP-layer-work"><a href="#How-SPP-layer-work" class="headerlink" title="How SPP layer work"></a><strong>How SPP layer work</strong></h3><div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/SPP-net/spp_layer.png" height="70%" width="70%"></div>  
+
+<p>It uses multi-level spatial bins to get fixed-lenght vectors, and then feed the fixed vector to fc layer.<br>SPP layer can be used for classic CNN models by replaceing the last pooling layer with SPP layer as baseline.  </p>
+<h3 id="SPP-net-for-Detection"><a href="#SPP-net-for-Detection" class="headerlink" title="SPP-net for Detection"></a><strong>SPP-net for Detection</strong></h3><p><a href="https://blog.csdn.net/Andrewseu/article/details/67632480" target="_blank" rel="noopener">R-CNN</a> costs much time for feature extraction, because CNN extracts features for each region proposal of 2k~ obtained by selective search.  </p>
+<p><div align="center"><img src="https://saveimages.oss-cn-hangzhou.aliyuncs.com/CNNs_for_image_classification/SPP-net/RCNN_vs_SPP.png" height="50%" width="50%"></div><br>SPP-net-based system computes features 24-102× faster than R-CNN. It can run the convolutional layers only once on the entire image (regardless of the number of windows), and then extract features by SPP-net on the feature maps.</p>
+</div><div class="tags"><a href="/tags/Classification/">Classification</a></div><div class="post-nav"><a class="pre" href="/Detection/Fast-RCNN/">Fast R-CNN</a><a class="next" href="/Classification/SKNet/">SKNet</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="https://blog.dtrimina.cn"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/deep-learning-tools/" style="font-size: 15px;">deep-learning-tools</a> <a href="/tags/Classification/" style="font-size: 15px;">Classification</a> <a href="/tags/Detection/" style="font-size: 15px;">Detection</a> <a href="/tags/Segmentation/" style="font-size: 15px;">Segmentation</a> <a href="/tags/summary/" style="font-size: 15px;">summary</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/Segmentation/segmentation-4/">segmentation(4) -- DilatedNet、DRN</a></li><li class="post-list-item"><a class="post-list-link" href="/Segmentation/segmentation-3/">segmentation(3) -- ENet、LinkNet、FC-DenseNet</a></li><li class="post-list-item"><a class="post-list-link" href="/Segmentation/segmentation-2/">segmentation(2) -- U-Net、SegNet</a></li><li class="post-list-item"><a class="post-list-link" href="/Classification/classification-4/">Inceptions -- GoogLeNet, V2, V3, V4</a></li><li class="post-list-item"><a class="post-list-link" href="/Segmentation/segmentation-1/">segmentation(1) -- FCN、DeconvNet</a></li><li class="post-list-item"><a class="post-list-link" href="/summary/CNN-architecture-summary/">Systematic evaluation of CNN advances on the ImageNet</a></li><li class="post-list-item"><a class="post-list-link" href="/Classification/SqueezeNet/">SqueezeNet</a></li><li class="post-list-item"><a class="post-list-link" href="/deep-learning-tools/Ubuntu18-04-deep-learning/">Ubuntu18.04 with deep learning (cuda10.0 + pytorch1.1 + tensorflow2.0.0-beta + mxnet)</a></li><li class="post-list-item"><a class="post-list-link" href="/Detection/Fast-RCNN/">Fast R-CNN</a></li><li class="post-list-item"><a class="post-list-link" href="/Classification/classification-3/">classification(3) -- VGG、Resnet、GoogLeNet、SPP-net</a></li></ul></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">LXY.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
